@@ -27,7 +27,7 @@ What you should see:
 
 ### 4) Run the Spud app
 ```bash
-python /home/runner/work/mip/mip/spud/main.py
+python spud/main.py
 ```
 What you should see:
 - a frameless, always-on-top potato companion
