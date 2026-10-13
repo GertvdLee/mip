@@ -1,12 +1,13 @@
 import random
 import tkinter as tk
 
-from config import (
+from spud.config import (
     MAX_BUBBLE_DURATION,
     MAX_EVENT_INTERVAL,
     MIN_BUBBLE_DURATION,
     MIN_EVENT_INTERVAL,
 )
+from spud.spud_memory import record_interaction, save_memory
 
 PUNS_AND_COMMENTS = [
     "I'm just here for moral starch.",
@@ -35,14 +36,23 @@ class SpudLogic:
         event = random.choice(["bubble", "animation", "memory_reference"])
 
         if event == "bubble":
-            self.show_text_bubble(random.choice(PUNS_AND_COMMENTS))
+            text = random.choice(PUNS_AND_COMMENTS)
+            self.memory_data = record_interaction(self.memory_data, "bubble")
+            save_memory(self.memory_data)
+            self.show_text_bubble(text)
             return
 
         if event == "animation":
-            self.visuals.animate(random.choice(["wiggle", "grow_shrink", "flash"]))
+            animation = random.choice(["wiggle", "grow_shrink", "flash"])
+            self.memory_data = record_interaction(self.memory_data, animation)
+            save_memory(self.memory_data)
+            self.visuals.animate(animation)
             return
 
-        self.show_text_bubble(self.trigger_memory_comment())
+        text = self.trigger_memory_comment()
+        self.memory_data = record_interaction(self.memory_data, "memory_reference")
+        save_memory(self.memory_data)
+        self.show_text_bubble(text)
 
     def show_text_bubble(self, text: str) -> None:
         if self._bubble and self._bubble.winfo_exists():

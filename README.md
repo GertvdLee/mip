@@ -1,47 +1,55 @@
 # mip
 
-A small Tkinter playground with:
-- a **frameless demo window** (`frameless_window.py`)
-- the **Spud desktop buddy** app (`spud/main.py`)
+`mip` is now organized around a single app: the Spud desktop companion.
 
-## Beginner-friendly quick start
+Project layout:
+- `spud/` — the actual desktop companion app
+- `examples/` — demo scripts and experiments, including the old frameless sample
+- `README.md` — product guidance for the app
+
+## Quick start
 
 ### 1) Prerequisites
 - Python **3.10+**
 - Tkinter available in your Python install
 
-### 2) Clone and open the project
+### 2) Run the Spud app
+From the repository root, open a terminal and run:
+
 ```bash
-git clone https://github.com/GertvdLee/mip.git
-cd mip
+python -m spud
 ```
 
-### 3) Run the simple frameless demo
-```bash
-python frameless_window.py
-```
-What you should see:
-- a frameless, always-on-top window
-- positioned near the bottom-right of your screen
-- `Esc` closes the window
+This starts the desktop companion in its own frameless window, keeps it above other apps, and begins its random bubble/animation loop immediately. On first launch it creates `spud/memory.json` and from then on it persists a lightweight memory log while the app stays running in the background. If you want to keep the original demo window for reference, you can still run `python frameless_window.py` separately.
 
-### 4) Run the Spud app
-```bash
-python spud/main.py
-```
 What you should see:
 - a frameless, always-on-top potato companion
 - random bubbles/animations every few seconds
-- memory tracking saved in `spud/memory.json`
+- persistent memory saved in `spud/memory.json`
+- a simple visual fallback if no sprite asset is available yet
 
-## Requirement status check
+### 3) Run the legacy demo (example only)
+```bash
+python frameless_window.py
+```
 
-Based on the current code in this repository, these requirements are implemented:
+This demo is retained as an example and not the product app itself.
 
-- [x] Frameless window behavior (`overrideredirect(True)`)
-- [x] Always-on-top window behavior (`-topmost`)
-- [x] Bottom-right placement support
-- [x] Transparent background support with fallback behavior
-- [x] Keyboard close shortcut (`Esc`)
-- [x] Random events (text bubbles + animations) in Spud
-- [x] Basic persistent memory tracking (`spud/memory.json`)
+## Current implementation status
+
+The repo is now aligned around a single product app in `spud/`.
+
+Implemented:
+- [x] Frameless, always-on-top companion window
+- [x] Transparent background with fallback behavior
+- [x] Corner placement support
+- [x] Random text bubbles and animation events
+- [x] Persistent memory in `spud/memory.json`
+- [x] Package entry point via `python -m spud`
+- [x] Demo code isolated under `examples/`
+
+Planned follow-up items:
+- [ ] Add real sprite assets in `spud/assets/`
+- [ ] Add keyboard activity support (phase 2)
+- [ ] Add stronger memory interaction tracking for daily usage
+- [ ] Improve Windows click-through reliability

@@ -1,7 +1,7 @@
 import ctypes
 import tkinter as tk
 
-from config import (
+from spud.config import (
     BACKGROUND_COLOR,
     TOPMOST,
     WINDOW_HEIGHT,
@@ -10,9 +10,9 @@ from config import (
     WINDOW_POSITION,
     WINDOW_WIDTH,
 )
-from spud_logic import SpudLogic
-from spud_memory import load_memory, save_memory, update_daily_tracking
-from spud_visuals import SpudVisuals
+from spud.spud_logic import SpudLogic
+from spud.spud_memory import load_memory, save_memory, update_daily_tracking
+from spud.spud_visuals import SpudVisuals
 
 
 def _position_geometry(root: tk.Tk) -> str:
