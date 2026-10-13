@@ -1,7 +1,7 @@
 import tkinter as tk
 from pathlib import Path
 
-from config import ASSETS_FOLDER, DEFAULT_SPRITE, FALLBACK_EMOJI, FALLBACK_EMOJI_SIZE
+from spud.config import ASSETS_FOLDER, DEFAULT_SPRITE, FALLBACK_EMOJI, FALLBACK_EMOJI_SIZE
 
 
 class SpudVisuals:

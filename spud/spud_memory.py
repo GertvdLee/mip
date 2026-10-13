@@ -3,7 +3,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from config import MEMORY_FILE
+from spud.config import MEMORY_FILE
 
 
 DEFAULT_MEMORY: dict[str, Any] = {
@@ -11,6 +11,7 @@ DEFAULT_MEMORY: dict[str, Any] = {
     "last_seen": None,
     "days_active": 0,
     "total_interactions": 0,
+    "last_event": None,
     "mood_history": [],
 }
 
@@ -23,6 +24,8 @@ def _safe_memory_data(data: Any) -> dict[str, Any]:
     merged = dict(DEFAULT_MEMORY)
     if isinstance(data, dict):
         merged.update({k: data[k] for k in merged.keys() if k in data})
+    if not isinstance(merged.get("mood_history"), list):
+        merged["mood_history"] = []
     return merged
 
 
@@ -57,4 +60,18 @@ def update_daily_tracking(data: dict[str, Any]) -> dict[str, Any]:
         memory["days_active"] = int(memory["days_active"] or 0) + 1
 
     memory["last_seen"] = today
+    return memory
+
+
+def record_interaction(data: dict[str, Any], event_type: str) -> dict[str, Any]:
+    memory = _safe_memory_data(data)
+    memory["total_interactions"] = int(memory.get("total_interactions", 0) or 0) + 1
+    memory["last_event"] = event_type
+
+    history = memory.get("mood_history")
+    if not isinstance(history, list):
+        history = []
+
+    history.append({"date": _today_iso(), "event": event_type})
+    memory["mood_history"] = history[-25:]
     return memory
